@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
  * @since 2019-10-18
  */
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/stress")
 public class StressTestController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class StressTestController {
 
     }
 
-    @PostMapping("/request")
+    @PostMapping("/test")
     public Mono<MyResponse> request(@RequestParam("type") final String type, @RequestBody final MyRequest request) {
         return stressTestService.sendRequest(type, request);
     }
