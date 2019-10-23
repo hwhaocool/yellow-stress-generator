@@ -1,4 +1,4 @@
-package com.fanggeek.webflux.demo;
+package com.github.hwhaocool.webflux.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

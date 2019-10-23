@@ -1,4 +1,4 @@
-package com.fanggeek.webflux.demo.model;
+package com.github.hwhaocool.webflux.demo.model;
 
 public class MyRequest {
 

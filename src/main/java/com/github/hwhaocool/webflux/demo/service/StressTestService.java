@@ -1,4 +1,4 @@
-package com.fanggeek.webflux.demo.service;
+package com.github.hwhaocool.webflux.demo.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
@@ -25,9 +24,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
 
-import com.fanggeek.webflux.demo.model.MyRequest;
-import com.fanggeek.webflux.demo.model.MyResponse;
-import com.fanggeek.webflux.demo.utils.HttpManager;
+import com.github.hwhaocool.webflux.demo.model.MyRequest;
+import com.github.hwhaocool.webflux.demo.model.MyResponse;
+import com.github.hwhaocool.webflux.demo.utils.HttpManager;
 
 import reactor.core.publisher.Mono;
 

@@ -1,4 +1,4 @@
-package com.fanggeek.webflux.demo.service;
+package com.github.hwhaocool.webflux.demo.service;
 
 import org.springframework.stereotype.Service;
 

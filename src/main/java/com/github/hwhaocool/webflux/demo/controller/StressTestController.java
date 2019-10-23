@@ -1,4 +1,4 @@
-package com.fanggeek.webflux.demo.controller;
+package com.github.hwhaocool.webflux.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fanggeek.webflux.demo.model.MyRequest;
-import com.fanggeek.webflux.demo.model.MyResponse;
-import com.fanggeek.webflux.demo.service.StressTestService;
+import com.github.hwhaocool.webflux.demo.model.MyRequest;
+import com.github.hwhaocool.webflux.demo.model.MyResponse;
+import com.github.hwhaocool.webflux.demo.service.StressTestService;
 
 import reactor.core.publisher.Mono;
 

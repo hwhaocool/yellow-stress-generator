@@ -1,4 +1,4 @@
-package com.fanggeek.webflux.demo.service;
+package com.github.hwhaocool.webflux.demo.service;
 
 import java.util.HashMap;
 import java.util.Map;

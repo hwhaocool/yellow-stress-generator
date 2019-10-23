@@ -1,7 +1,7 @@
-package com.fanggeek.webflux.demo;
+package com.github.hwhaocool.webflux.demo;
 
-import com.fanggeek.webflux.demo.model.MyRequest;
-import com.fanggeek.webflux.demo.service.StressTestService;
+import com.github.hwhaocool.webflux.demo.model.MyRequest;
+import com.github.hwhaocool.webflux.demo.service.StressTestService;
 
 public class RequestTest {
     
