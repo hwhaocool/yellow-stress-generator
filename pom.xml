@@ -9,10 +9,11 @@
         <version>2.2.0.RELEASE</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.fanggeek.webflux</groupId>
-    <artifactId>stress-test-demo</artifactId>
+    
+    <groupId>com.github.hwhaocool</groupId>
+    <artifactId>stress-generator</artifactId>
     <version>1.0</version>
-    <name>stress-test-demo</name>
+    <name>stress-generator</name>
     
     <description>Demo project for Spring Boot</description>
 
