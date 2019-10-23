@@ -82,11 +82,20 @@ public class StressTestService {
         LOGGER.info("sync end, cost {}", System.currentTimeMillis() - start);
     }
     
+    /**
+     * <br>使用异步模式去发送请求
+     *
+     * @param request
+     * @author YellowTail
+     * @since 2019-10-23
+     */
     private void requestByAsyncMode(MyRequest request)  {
-        
         String method = request.getMethod();
         
         Integer count = request.getCount();
+        
+        LOGGER.info("async start, count {}, start at {}, request {}", 
+                count, System.currentTimeMillis(), request);
         
         HttpMethod httpMethod = HttpMethod.resolve(method.toUpperCase());
         
@@ -94,10 +103,8 @@ public class StressTestService {
         try {
             uri = new URI(request.getUrl());
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error("parse uri error, ", e);
         }
-        
-        LOGGER.info("async start, count {}, start {}", count, System.currentTimeMillis());
         
         RequestBodySpec requestBodySpec = WebClient.create()
             .method(httpMethod)
@@ -107,6 +114,8 @@ public class StressTestService {
         
         IntStream.range(0, count)
             .forEach(k -> invoke(requestBodySpec, k));
+        
+        LOGGER.info("request submit completed");
     }
     
     private void invoke(HttpUriRequest httpRequest) {
