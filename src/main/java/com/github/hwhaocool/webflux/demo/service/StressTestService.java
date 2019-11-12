@@ -106,6 +106,7 @@ public class StressTestService {
             LOGGER.error("parse uri error, ", e);
         }
         
+        
         RequestBodySpec requestBodySpec = WebClient.create()
             .method(httpMethod)
             .uri(uri)
@@ -146,6 +147,12 @@ public class StressTestService {
             .bodyToMono(String.class)
 //            .log()
 //            .subscribe(k -> LOGGER.info("{} cost {}", index, System.currentTimeMillis() - start))
+            
+            .doOnError(e -> {
+                LOGGER.error("async occur error, {}", e.getClass().getName());
+                
+                LOGGER.error("error, ", e);
+            })
             .subscribe(k ->  map.put(System.currentTimeMillis(), index) )
             ;
     }
