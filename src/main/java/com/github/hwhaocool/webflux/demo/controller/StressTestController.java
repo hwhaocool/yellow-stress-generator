@@ -2,6 +2,7 @@ package com.github.hwhaocool.webflux.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class StressTestController {
 
     }
 
-    @PostMapping("/test")
+    @PostMapping(value="/test", produces=MediaType.APPLICATION_JSON_VALUE)
     public Mono<MyResponse> request(@RequestParam("type") final String type, @RequestBody final MyRequest request) {
         return stressTestService.sendRequest(type, request);
     }

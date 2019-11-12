@@ -2,6 +2,7 @@ package com.github.hwhaocool.webflux.demo.controller;
 
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/stress")
 public class HealthCheckController {
     
-    @GetMapping("/health")
+    @GetMapping(value="/health", produces=MediaType.TEXT_PLAIN_VALUE)
     public Mono<String> health() {
         
         return Mono.just("ok");
