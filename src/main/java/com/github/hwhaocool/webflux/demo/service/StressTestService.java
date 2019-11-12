@@ -58,7 +58,7 @@ public class StressTestService {
             break;
             
         case "async":
-            requestByAsyncMode(request);
+            result = requestByAsyncMode(request);
             break;
 
         default:
