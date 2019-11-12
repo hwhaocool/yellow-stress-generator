@@ -28,6 +28,7 @@
     <logger name="org.mongodb.driver" level="INFO" />
     <logger name="com.github.hwhaocool" level="DEBUG" />
     <logger name="org.apache.http" level="INFO" />
+    <logger name="reactor.netty" level="INFO" />
 
     <root level="DEBUG">
         <appender-ref ref="console" />
