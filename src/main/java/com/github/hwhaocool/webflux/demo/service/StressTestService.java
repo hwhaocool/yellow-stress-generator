@@ -46,14 +46,15 @@ public class StressTestService {
     }
 
     public Mono<MyResponse> sendRequest(String type, MyRequest request) {
-        
         if (null == type || type.isEmpty()) {
             type = "sync";
         }
         
+        MyResponse result = null;
+        
         switch (type) {
         case "sync":
-            requestBySyncMode(request);
+            result = requestBySyncMode(request);
             break;
             
         case "async":
@@ -64,10 +65,10 @@ public class StressTestService {
             break;
         }
         
-        return null;
+        return Mono.just(result);
     }
     
-    private void requestBySyncMode(MyRequest request) {
+    private MyResponse requestBySyncMode(MyRequest request) {
         Integer count = request.getCount();
         
         HttpUriRequest httpRequest = genRequest(request);
@@ -79,7 +80,15 @@ public class StressTestService {
         IntStream.range(0, count)
             .forEach(k -> invoke(httpRequest));
         
-        LOGGER.info("sync end, cost {}", System.currentTimeMillis() - start);
+        long cost = System.currentTimeMillis() - start;
+        
+        MyResponse response = new MyResponse();
+        response.setCount(count);
+        response.setCost(cost);
+        
+        LOGGER.info("sync end, cost {}", cost);
+        
+        return response;
     }
     
     /**
@@ -89,13 +98,15 @@ public class StressTestService {
      * @author YellowTail
      * @since 2019-10-23
      */
-    private void requestByAsyncMode(MyRequest request)  {
+    private MyResponse requestByAsyncMode(MyRequest request)  {
         String method = request.getMethod();
         
         Integer count = request.getCount();
         
+        long start = System.currentTimeMillis();
+        
         LOGGER.info("async start, count {}, start at {}, request {}", 
-                count, System.currentTimeMillis(), request);
+                count, start, request);
         
         HttpMethod httpMethod = HttpMethod.resolve(method.toUpperCase());
         
@@ -106,7 +117,6 @@ public class StressTestService {
             LOGGER.error("parse uri error, ", e);
         }
         
-        
         RequestBodySpec requestBodySpec = WebClient.create()
             .method(httpMethod)
             .uri(uri)
@@ -116,7 +126,15 @@ public class StressTestService {
         IntStream.range(0, count)
             .forEach(k -> invoke(requestBodySpec, k));
         
-        LOGGER.info("request submit completed");
+        long cost = System.currentTimeMillis() - start;
+        
+        LOGGER.info("request submit completed, cost {}", cost);
+        
+        MyResponse response = new MyResponse();
+        response.setCount(count);
+        response.setCost(cost);
+        
+        return response;
     }
     
     private void invoke(HttpUriRequest httpRequest) {
