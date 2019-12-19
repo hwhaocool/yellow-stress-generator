@@ -45,6 +45,7 @@ public class StressTestService {
         map = new ConcurrentHashMap<>(5000);
     }
 
+    
     public Mono<MyResponse> sendRequest(String type, MyRequest request) {
         if (null == type || type.isEmpty()) {
             type = "sync";
