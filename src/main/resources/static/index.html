@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Stress Test</title>
+    
+    <script type="text/javascript" src="send.js"></script>
+
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    
+    <style>
+
+        h1 {color:#E215C3;}
+
+        label{
+            cursor: pointer;
+            display: inline-block;
+            padding: 3px 6px;
+            text-align: right;
+            width: 150px;
+            vertical-align: top;
+        }
+
+        input{
+            font-size: inherit;
+        }
+
+    </style>
+	
+</head>
+<body>
+
+    <h1>
+        <input type="button" style="color: #E215C3;" value="send" onclick="sendRequest()">
+    </h1>
+
+    <p>
+        <label>类型 :</label>
+        <input id="type1" type="radio" checked="true" value="sync" />  sync 
+        <input id="type2" type="radio" value="async" /> async 
+    </p>
+
+    <p>
+        <label>count 次数 :</label>
+        <input type="number" id="count" value=1>
+    </p>
+
+    <p>
+        <label>concurrent 并发数 :</label>
+        <input type="number" id="concurrent" value=1>
+    </p>
+
+    <p>
+        <label>payload :</label>
+        <textarea id="payload" placeholder="请输入内容" style="width: 1200px;" rows="20" ></textarea>
+    </p>
+
+    <p>
+        <label>result :</label>
+        <textarea id="result" placeholder="这里是结果"  readOnly style="width: 1200px;" rows="10"></textarea>
+    </p>
+    
+</body>
+</html>
