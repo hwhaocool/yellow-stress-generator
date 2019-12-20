@@ -21,12 +21,15 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hwhaocool.webflux.demo.model.MyResponse;
 import com.github.hwhaocool.webflux.demo.model.payload.FullRequest;
 import com.github.hwhaocool.webflux.demo.model.payload.PayloadRquest;
@@ -47,6 +50,9 @@ public class PayloadSeneService {
     
     //header， Content-Type: application/json
     private static final Pattern HEADER_PATTERN = Pattern.compile("^([^\\s:]+)\\s*:\\s*(.+)$");
+    
+    @Autowired
+    private ObjectMapper objectMapper;
     
     /**
      * <br>接收带 pyload 字符串的请求，解析、然后发送出去
@@ -91,7 +97,15 @@ public class PayloadSeneService {
             return Mono.just("ok");
         }
         
-        return Mono.just(result.toString());
+        try {
+            String writeValueAsString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+            
+            return Mono.just(writeValueAsString);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("parse error, ", e);
+        }
+        
+        return Mono.just("ok");
     }
     
     private MyResponse requestBySyncMode(PayloadRquest request) {

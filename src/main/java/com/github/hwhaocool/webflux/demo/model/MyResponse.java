@@ -44,7 +44,7 @@ public class MyResponse {
         this.statusCode = statusCode;
     }
     
-    private String getRate() {
+    public String getRate() {
         DecimalFormat decimalFormat = new DecimalFormat(".00");
         double rate = (double)cost / (double) count;
         return decimalFormat.format(rate);
