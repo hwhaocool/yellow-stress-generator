@@ -1,4 +1,4 @@
-FROM registry.cn-shenzhen.aliyuncs.com/cuishiwen/geek-java8-v1:latest
+FROM registry.cn-shenzhen.aliyuncs.com/cuishiwen/geek-java8:v5
 
 MAINTAINER willcui
 
@@ -19,4 +19,4 @@ EXPOSE 8080
 
 COPY target/stress-generator-1.0.jar .
 
-ENTRYPOINT ["java", "-Duser.timezone=GMT+8", "-Djava.security.egd=file:/dev/./urandom", "-jar", "stress-generator-1.0.jar", "--spring.profiles.active=${envType}"]
+CMD ["java", "-Duser.timezone=GMT+8", "-Djava.security.egd=file:/dev/./urandom", "-jar", "stress-generator-1.0.jar", "--spring.profiles.active=${envType}"]
