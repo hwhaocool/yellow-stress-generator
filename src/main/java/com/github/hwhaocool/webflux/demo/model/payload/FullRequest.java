@@ -21,6 +21,10 @@ public class FullRequest {
     public void setHost(String host) {
         this.host = host;
     }
+    
+    public String getFullUrl() {
+        return String.format("http://%s%s", host, uri);
+    }
 
     public String getUri() {
         return uri;
