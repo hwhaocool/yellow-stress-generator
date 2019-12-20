@@ -1,5 +1,6 @@
 package com.github.hwhaocool.webflux.demo.controller;
 
+import java.lang.management.BufferPoolMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.MemoryType;
@@ -66,6 +67,22 @@ public class HealthCheckController {
                 
                 sb.append(poolName).append("->").append(usage.toString()).append(CHANGE_LINE);
             }
+        }
+        
+        try {
+            @SuppressWarnings("rawtypes")
+            Class bufferPoolMXBeanClass = Class.forName("java.lang.management.BufferPoolMXBean");
+            @SuppressWarnings("unchecked")
+            List<BufferPoolMXBean> bufferPoolMXBeans = ManagementFactory.getPlatformMXBeans(bufferPoolMXBeanClass);
+            for (BufferPoolMXBean mbean : bufferPoolMXBeans) {
+                long used = mbean.getMemoryUsed();
+                long total = mbean.getTotalCapacity();
+                
+                sb.append(mbean.getName()).append("->").append(used).append(",").append(total).append(CHANGE_LINE);
+                
+            }
+        } catch (ClassNotFoundException e) {
+            // ignore
         }
         
         return Mono.just(sb.toString());
