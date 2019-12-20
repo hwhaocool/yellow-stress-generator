@@ -47,7 +47,7 @@ function sendRequest() {
     
     $.ajax({
         type: "put",
-        async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        async: false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url: "/stress/send",    //请求发送到TestServlet处
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
