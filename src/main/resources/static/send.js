@@ -44,6 +44,8 @@ function sendRequest() {
     data.type = type;
 
     console.log(data);
+
+    $("#result").val("sending... waiting");
     
     $.ajax({
         type: "put",
