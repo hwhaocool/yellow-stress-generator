@@ -1,9 +1,5 @@
-FROM registry.cn-shenzhen.aliyuncs.com/cuishiwen/geek-java8:v5
-
-MAINTAINER willcui
-
-# 更新时间
-ENV REFRESHED_AT 2019-03-16
+#FROM registry.cn-shenzhen.aliyuncs.com/cuishiwen/geek-java8:v5
+FROM openjdk:8u232-jdk-stretch
 
 # 拷贝代码
 RUN mkdir /stress
