@@ -18,6 +18,12 @@ public class MemoryService {
     
     private static final String CHANGE_LINE = "\n";
     
+    public static void main(String[] args) {
+        String mem = new MemoryService().mem();
+        
+        System.out.println(mem);
+    }
+    
     /**
      * <br>得到 内存信息
      * <br>代码基本抄了 阿里的 arthas 
@@ -35,25 +41,25 @@ public class MemoryService {
 
         List<MemoryPoolMXBean> memoryPoolMXBeans = ManagementFactory.getMemoryPoolMXBeans();
         
-        sb.append("heap ->").append(heapMemoryUsage.toString()).append(CHANGE_LINE);
+        sb.append("heap -> ").append(heapMemoryUsage.toString()).append(CHANGE_LINE);
 
         for (MemoryPoolMXBean poolMXBean : memoryPoolMXBeans) {
             if (MemoryType.HEAP.equals(poolMXBean.getType())) {
                 MemoryUsage usage = poolMXBean.getUsage();
                 String poolName = beautifyName(poolMXBean.getName());
                 
-                sb.append(poolName).append("->").append(usage.toString()).append(CHANGE_LINE);
+                sb.append(poolName).append(" ->").append(humanRead(usage)).append(CHANGE_LINE);
             }
         }
         
-        sb.append("noheap ->").append(nonHeapMemoryUsage.toString()).append(CHANGE_LINE);
+        sb.append("noheap -> ").append(nonHeapMemoryUsage.toString()).append(CHANGE_LINE);
 
         for (MemoryPoolMXBean poolMXBean : memoryPoolMXBeans) {
             if (MemoryType.NON_HEAP.equals(poolMXBean.getType())) {
                 MemoryUsage usage = poolMXBean.getUsage();
                 String poolName = beautifyName(poolMXBean.getName());
                 
-                sb.append(poolName).append("->").append(usage.toString()).append(CHANGE_LINE);
+                sb.append(poolName).append(" ->").append(humanRead(usage)).append(CHANGE_LINE);
             }
         }
         
@@ -68,7 +74,9 @@ public class MemoryService {
                 long used = mbean.getMemoryUsed();
                 long total = mbean.getTotalCapacity();
                 
-                sb.append(mbean.getName()).append("->").append(used).append(",").append(total).append(CHANGE_LINE);
+                sb.append(mbean.getName()).append(" -> ")
+                    .append("used: ").append(humanRead(used)).append(", ")
+                    .append("total: ").append(humanRead(total)).append(CHANGE_LINE);
                 
             }
         } catch (ClassNotFoundException e) {
@@ -80,6 +88,36 @@ public class MemoryService {
     
     private String beautifyName(String name) {
         return name.replace(' ', '_').toLowerCase();
+    }
+    
+    private String humanRead(long value) {
+        if (value < 1024) {
+            return value + "Byte";
+        }
+        
+        value = value >> 10;
+        if (value < 1024) {
+            return value + "K";
+        }
+        
+        value = value >> 10;
+        if (value < 1024) {
+            return value + "M";
+        }
+        
+        value = value >> 10;
+        return value + "G";
+    }
+    
+    private String humanRead(MemoryUsage usage) {
+        StringBuffer buf = new StringBuffer(" ");
+        
+        buf.append(String.format("%s = %d(%s) ", "init", usage.getInit(), humanRead(usage.getInit())));
+        buf.append(String.format("%s = %d(%s) ", "used", usage.getUsed(), humanRead(usage.getUsed())));
+        buf.append(String.format("%s = %d(%s) ", "committed", usage.getCommitted(), humanRead(usage.getCommitted())));
+        buf.append(String.format("%s = %d(%s) ", "max", usage.getMax(), humanRead(usage.getMax())));
+        
+        return buf.toString();
     }
 
 }
