@@ -41,7 +41,7 @@ public class MemoryService {
 
         List<MemoryPoolMXBean> memoryPoolMXBeans = ManagementFactory.getMemoryPoolMXBeans();
         
-        sb.append("heap -> ").append(heapMemoryUsage.toString()).append(CHANGE_LINE);
+        sb.append("heap -> ").append(humanRead(heapMemoryUsage)).append(CHANGE_LINE);
 
         for (MemoryPoolMXBean poolMXBean : memoryPoolMXBeans) {
             if (MemoryType.HEAP.equals(poolMXBean.getType())) {
@@ -52,7 +52,7 @@ public class MemoryService {
             }
         }
         
-        sb.append("noheap -> ").append(nonHeapMemoryUsage.toString()).append(CHANGE_LINE);
+        sb.append("noheap -> ").append(humanRead(nonHeapMemoryUsage)).append(CHANGE_LINE);
 
         for (MemoryPoolMXBean poolMXBean : memoryPoolMXBeans) {
             if (MemoryType.NON_HEAP.equals(poolMXBean.getType())) {
