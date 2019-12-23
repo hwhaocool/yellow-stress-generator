@@ -27,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -158,14 +159,26 @@ public class PayloadSeneService {
             LOGGER.error("parse uri error, ", e);
         }
         
-        RequestBodySpec requestBodySpec = WebClient.create()
+        RequestHeadersSpec<?> requestHeadersSpecc = WebClient.create()
             .method(httpMethod)
             .uri(uri)
             .accept(MediaType.APPLICATION_JSON)
-            .acceptCharset(Charset.forName("utf-8"));
+            .acceptCharset(Charset.forName("utf-8"))
+            .bodyValue(fullRequest.getData())
+            ;
+        
+        fullRequest.getHeaderMap().forEach( (k,v) -> requestHeadersSpecc.header(k, v) );
+        
+        
+//        RequestBodySpec requestBodySpec = WebClient.create()
+//            .method(httpMethod)
+//            .uri(uri)
+//            .accept(MediaType.APPLICATION_JSON)
+//            .acceptCharset(Charset.forName("utf-8"))
+//            ;
         
         IntStream.range(0, request.getCount())
-            .forEach(k -> invoke(requestBodySpec, k));
+            .forEach(k -> invoke(requestHeadersSpecc, k));
         
         long cost = System.currentTimeMillis() - start;
         
@@ -268,6 +281,23 @@ public class PayloadSeneService {
             .subscribe(k -> LOGGER.info("{} cost {}", index, System.currentTimeMillis() - start))
 //            .subscribe(k ->  {} )
             ;
+    }
+    
+    private void invoke(RequestHeadersSpec spec, int index) {
+        long start = System.currentTimeMillis();
+        
+        spec
+        .retrieve()
+        .bodyToMono(String.class)
+//            .log()
+        .doOnError(e -> {
+            LOGGER.error("async occur error, {}", e.getClass().getName());
+            
+            LOGGER.error("error, ", e);
+        })
+        .subscribe(k -> LOGGER.info("{} cost {}", index, System.currentTimeMillis() - start))
+//            .subscribe(k ->  {} )
+        ;
     }
     
     private FullRequest convert(PayloadRquest request) {
