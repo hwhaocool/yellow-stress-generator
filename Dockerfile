@@ -1,5 +1,6 @@
 #FROM registry.cn-shenzhen.aliyuncs.com/cuishiwen/geek-java8:v5
-FROM openjdk:8u232-jdk-stretch
+#FROM openjdk:8u232-jdk-stretch
+FROM geek-java8:v5v2
 
 # 拷贝代码
 RUN mkdir /stress
