@@ -68,14 +68,16 @@ function log() {
     
     var gap_list = [];
     
+    var value = parseInt(num_list[0], 10);
     for(var j=0; j< num_list.length; ) {
+
         for(var i=min; i<max; i++) {
-            var value = parseInt(num_list[j], 10);
             
             if(i != value) {
                 gap_list.push(i);
             } else {
                 j++;
+                value = parseInt(num_list[j], 10);
             }
         }
     }
