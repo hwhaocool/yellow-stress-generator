@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>LogType</title>
+    
+    <script type="text/javascript" src="log.js"></script>
+
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    
+    <style>
+
+        h1 {color:#E215C3;}
+
+        label{
+            cursor: pointer;
+            display: inline-block;
+            padding: 3px 6px;
+            text-align: right;
+            width: 150px;
+            vertical-align: top;
+        }
+
+        input{
+            font-size: inherit;
+        }
+
+    </style>
+	
+</head>
+<body>
+
+    <h1>
+        <input type="button" style="color: #E215C3;" value="go" onclick="log()">
+    </h1>
+
+
+    <p>
+        <label>logtype 最小值 :</label>
+        <input type="number" id="min" value=1>
+    </p>
+    
+    <p>
+        <label>logtype 最大值 :</label>
+        <input type="number" id="max" value=10>
+    </p>
+
+    <p>
+        <label>输入/输出 :</label>
+        <textarea id="input" placeholder="请输入内容" style="width: 200px;" rows="60" ></textarea>
+        <textarea id="sort" placeholder="这里是对输入排序" readOnly style="width: 200px;" rows="60" ></textarea>
+        <textarea id="result" placeholder="这里是结果"  readOnly style="width: 200px;" rows="60"></textarea>
+    </p>
+
+    
+</body>
+</html>
