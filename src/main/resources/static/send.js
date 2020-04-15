@@ -59,8 +59,16 @@ function sendRequest() {
             if (result) {
 
                 console.log(result);
-
-                $("#result").val(result);
+                
+                if (result) {
+                    var resJson = JSON.parse(result);
+                    $("#cost").val(resJson.cost);
+                    $("#rate").val(resJson.rate);
+                    $("#status_code").val(resJson.statusCode);
+                    
+                    var haha = JSON.stringify(JSON.parse(resJson.message),null,4);
+                    $("#result").val(haha);
+                }
             }
         },
         error: function (errorMsg) {
