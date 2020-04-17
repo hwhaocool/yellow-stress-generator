@@ -66,8 +66,15 @@ function sendRequest() {
                     $("#rate").val(resJson.rate);
                     $("#status_code").val(resJson.statusCode);
                     
-                    var haha = JSON.stringify(JSON.parse(resJson.message),null,4);
-                    $("#result").val(haha);
+                    try {
+                        var haha = JSON.stringify(JSON.parse(resJson.message),null,4);
+                        $("#result").val(haha);
+                    }
+                    catch(err) {
+                        $("#result").val(resJson.message);
+                    }
+                    
+                    
                 }
             }
         },
