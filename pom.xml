@@ -13,9 +13,10 @@
     <groupId>com.github.hwhaocool</groupId>
     <artifactId>stress-generator</artifactId>
     <version>1.0</version>
+
     <name>stress-generator</name>
     
-    <description>Demo project for Spring Boot</description>
+    <description>stress generator</description>
 
     <properties>
         <java.version>1.8</java.version>
