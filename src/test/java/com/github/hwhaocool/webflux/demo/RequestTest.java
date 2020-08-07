@@ -50,7 +50,6 @@ public class RequestTest {
         MyRequest myRequest = new MyRequest();
         myRequest.setMethod("get");
         myRequest.setCount(1000);
-        myRequest.setUrl("http://api-b-dev.kanfangjilu.com/v1/visitcard/estatecompanys");
         
         System.out.println("count = " + myRequest.getCount());
         
