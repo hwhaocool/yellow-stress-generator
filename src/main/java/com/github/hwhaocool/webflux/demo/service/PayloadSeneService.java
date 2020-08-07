@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -248,8 +249,23 @@ public class PayloadSeneService {
     private void invoke(HttpUriRequest httpRequest, MyResponse response) {
         
         try {
-            HttpResponse httpResponse = HttpManager.DEFAULT_CLIENT.execute(httpRequest);
-            
+
+            HttpResponse httpResponse = null;
+
+            Header firstHeader = httpRequest.getFirstHeader("Proxy-Host");
+            if (null != firstHeader) {
+                String proxyHost = firstHeader.getValue();
+
+                if (StringUtils.isNotBlank(proxyHost)) {
+
+                    // 如果有这个字段，那么就 生成一个 代理 客户端 去发送请求， 而不是直接发送
+                    httpResponse = HttpManager.genProxyClient(proxyHost).execute(httpRequest);
+                }
+            } else {
+
+                httpResponse = HttpManager.DEFAULT_CLIENT.execute(httpRequest);
+            }
+
             if (null != response && 1 == response.getCount()) {
                 //只发一次的时候，才会返回 response
                 response.setMessage(EntityUtils.toString(httpResponse.getEntity(), "utf-8"));
